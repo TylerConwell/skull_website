@@ -15,22 +15,31 @@ function App() {
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
-    const lines = ALL_ART[index].split('\n');
+    // 1. Safety check: ensure the art exists before splitting
+    const content = ALL_ART[index] || "";
+    const lines = content.split('\n');
+    
     let currentLine = 0;
-    setDisplayedContent(""); // Reset for new image
+    setDisplayedContent(""); 
     setIsTyping(true);
 
     const interval = setInterval(() => {
       if (currentLine < lines.length) {
-        setDisplayedContent((prev) => prev + lines[currentLine] + '\n');
+        const lineText = lines[currentLine];
+        
+        // 2. ONLY append if the line is not undefined
+        if (typeof lineText !== 'undefined') {
+          setDisplayedContent((prev) => prev + lineText + '\n');
+        }
+        
         currentLine++;
       } else {
         clearInterval(interval);
         setIsTyping(false);
       }
-    }, 50); // Speed: 50ms per line. Lower is faster.
+    }, 50);
 
-    return () => clearInterval(interval); // Cleanup on unmount or index change
+    return () => clearInterval(interval);
   }, [index]);
 
   return (
