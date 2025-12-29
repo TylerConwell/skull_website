@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: auto;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -12,6 +12,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 140px;
 }
 
 .power-btn {
@@ -30,6 +31,7 @@
   background: #00ff41;
   color: #000;
   box-shadow: 0 0 30px #00ff41;
+  border: 2px solid #ffffff;
 }
 
 /* Booting sequence styling */
