@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Import all 4 ASCII files as raw strings
-import art1 from './assets/skull_prt1.txt?raw';
-import art2 from './assets/skull_prt2.txt?raw';
-import art3 from './assets/skull_prt3.txt?raw';
-import art4 from './assets/skull_prt4.txt?raw';
+// import the skull files as raw strings for vite use
+import skull_prt1 from './assets/skull_prt1.txt?raw';
+import skull_prt2 from './assets/skull_prt2.txt?raw';
+import skull_prt3 from './assets/skull_prt3.txt?raw';
+import skull_prt4 from './assets/skull_prt4.txt?raw';
 
-const ALL_ART = [art1, art2, art3, art4];
+// both arrays for the art and the bios start up
+const ALL_ART = [skull_prt1, skull_prt2, skull_prt3, skull_prt4];
 const BOOT_LOGS = [
   "Bios Version:           5S4WB8X0.06F",
   "Service tag:                   XXXXX",
@@ -22,22 +23,32 @@ const BOOT_LOGS = [
   "SATA3                :[Not Detected]",
   "SATA4               :[Not Dectected]",
   ">Storage Configuration              ",
-  ">System Information                  ",
+  ">System Information                 ",
   "Legacy Diskette [1.44/1.25 MB 3^1/2]",
   "Legact Diskette B:        [Disabled]",
   ">Secondary Master             [None]",
   "Secondary Slave               [None]",
   "System Memory:                640 KB",
-  "Extended Memory:          1047552 KB",
+  "Extended Memory:          1047552 KB"
 ];
 
 function App() {
-  const [systemState, setSystemState] = useState('off'); // 'off', 'booting', 'ready'
+  // make the system a simple state machine with it being off, on or booting up
+  const [systemState, setSystemState] = useState('off');
+
+  // the boot up is also going to be a state machine with displaying or not
   const [bootLines, setBootLines] = useState([]);
-  const [index, setIndex] = useState(0); // Which image are we on?
-  const [displayedContent, setDisplayedContent] = useState(""); // The text currently typed
+
+  // the index is for the array to show what skull im showing right now
+  const [index, setIndex] = useState(0);
+
+  // the cursor display on what part of the text is being spit out
+  const [displayedContent, setDisplayedContent] = useState("");
+
+  // seeing if the cursor is typing the text out or if it has went to the end
   const [isTyping, setIsTyping] = useState(false);
-// --- BOOTING SEQUENCE LOGIC ---
+
+  // next page after the button for starting has been pressing and shows the bios set up, booting up
   useEffect(() => {
     if (systemState === 'booting') {
       let currentLine = 0;
