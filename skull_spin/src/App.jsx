@@ -6,3 +6,5 @@ import skull_prt1 from './assets/skull_prt1.txt?raw';
 import skull_prt2 from './assets/skull_prt2.txt?raw';
 import skull_prt3 from './assets/skull_prt3.txt?raw';
 import skull_prt4 from './assets/skull_prt4.txt?raw';
+
+// import all the ascii hands as raw str's as well
