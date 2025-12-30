@@ -9,13 +9,26 @@ import art4 from './assets/skull_prt4.txt?raw';
 
 const ALL_ART = [art1, art2, art3, art4];
 const BOOT_LOGS = [
-  "> INITIALIZING BIOS v4.0.2...",
-  "> CHECKING RAM................ [OK]",
-  "> LOADING KERNEL MODULES...",
-  "> MOUNTING ASSETS/FILESYSTEM...",
-  "> ESTABLISHING ASCII PROTOCOL...",
-  "> DECRYPTING IMAGE DATA...",
-  "> SYSTEM READY."
+  "Bios Version:           5S4WB8X0.06F",
+  "Service tag:                   XXXXX",
+  "                                    ",
+  "System Time               [10:44:23]",
+  "System Date         [Tue 12/30/2025]",
+  "> Primary IDE        :[Not Detected]",
+  "Master                              ",
+  ">Primary IDE Slave   :[Not Detected]",
+  "SATA1           :[HJ-PT-ST DVDRM GH]",
+  "SATA2             :[SAMSUNG HD103SJ]",
+  "SATA3                :[Not Detected]",
+  "SATA4               :[Not Dectected]",
+  ">Storage Configuration              ",
+  ">System Information                  ",
+  "Legacy Diskette [1.44/1.25 MB 3^1/2]",
+  "Legact Diskette B:        [Disabled]",
+  ">Secondary Master             [None]",
+  "Secondary Slave               [None]",
+  "System Memory:                640 KB",
+  "Extended Memory:          1047552 KB",
 ];
 
 function App() {
