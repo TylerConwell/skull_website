@@ -10,13 +10,12 @@ import skull_prt4 from './assets/skull_prt4.txt?raw';
 // both arrays for the art and the bios start up
 const ALL_ART = [skull_prt1, skull_prt2, skull_prt3, skull_prt4];
 const BOOT_LOGS = [
+  "",
   "Bios Version:           5S4WB8X0.06F",
   "Service tag:                   XXXXX",
-  "                                    ",
   "System Time               [10:44:23]",
   "System Date         [Tue 12/30/2025]",
-  "> Primary IDE        :[Not Detected]",
-  "Master                              ",
+  ">Primary IDE        :[Not Detected]",
   ">Primary IDE Slave   :[Not Detected]",
   "SATA1           :[HJ-PT-ST DVDRM GH]",
   "SATA2             :[SAMSUNG HD103SJ]",
@@ -56,7 +55,9 @@ function App() {
         if (currentLine < BOOT_LOGS.length) {
           setBootLines(prev => [...prev, BOOT_LOGS[currentLine]]);
           currentLine++;
-        } else {
+        } 
+        
+        else {
           clearInterval(interval);
           setTimeout(() => setSystemState('ready'), 1000); // Transition to main app
         }
@@ -80,7 +81,9 @@ function App() {
             setDisplayedContent(prev => prev + lineText + '\n');
           }
           currentLine++;
-        } else {
+        } 
+        
+        else {
           clearInterval(interval);
           setIsTyping(false);
         }
@@ -128,7 +131,7 @@ function App() {
             className={index === i ? 'active' : ''}
             disabled={isTyping}
           >
-            MODULE {i + 1}
+            Spec {i + 1}
           </button>
         ))}
       </nav>
