@@ -41,4 +41,28 @@ const boot_up_screen = [
     "Extended Memory:          1047552 KB"
 ];
 
-// 
+function App() {
+    // make state machine for the power screen, tell if system off or on
+    const [system_state, set_system_state] = useState('off');
+
+    // state for the boot up screen when its displaying
+    const [boot_lines, set_boot_lines] = useState([]);
+
+    // state for indexing of variable in the arrays
+    const [index, set_index] = useState(0);
+
+    // state for indexing the hand ascii as well if diff
+    const [hand_index, set_hand_index] = useState(0);
+
+    // state for what is displaying and when
+    const [displayed_content, set_displayed_content] = useState("");
+
+    // state for cursor on what is being texted on screen
+    const [is_typing, set_is_typing] = useState(false);
+
+
+    // next page after button pushed and boot up shown
+    useEffect(() => {
+        
+    })
+}
