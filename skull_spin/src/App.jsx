@@ -63,11 +63,23 @@ function App() {
 
     // next page after button pushed and boot up shown
     useEffect(() => {
+        // if the system is booting up then start the cursor text
         if (system_state === 'booting') {
             let current_line = 0;
             const interval = setInterval(() => {
-                
-            })
+                // if not at the end then keep printing
+                if (current_line < boot_up_screen.length) {
+                    set_boot_lines(prev => [...prev, boot_up_screen[current_line]]);
+                    current_line++;
+                }
+
+                else {
+                    // when at the end of the text go to other screen
+                    clearInterval(interval);
+                    setTimeout(() => set_system_state('ready'), 1000);
+                }
+            }, 400) // the speed of the boot_up_lines going down
+            return() => clearInterval(interval);
         }
-    })
+    }, [system_state]);
 }
