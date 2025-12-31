@@ -63,6 +63,11 @@ function App() {
 
     // next page after button pushed and boot up shown
     useEffect(() => {
-        
+        if (system_state === 'booting') {
+            let current_line = 0;
+            const interval = setInterval(() => {
+                
+            })
+        }
     })
 }
