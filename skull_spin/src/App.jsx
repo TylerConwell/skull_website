@@ -82,4 +82,30 @@ function App() {
             return() => clearInterval(interval);
         }
     }, [system_state]);
+
+    // ascii typing effect logic, scrolling down when 'ready'
+    useEffect(() => {
+        if(system_state === 'ready') {
+            const lines = (all_skull_pics[index] || "").trimEnd().split('\n');
+            let current_line = 0;
+            set_displayed_content("");
+            set_is_typing(true);
+
+            const interval = setInterval(() => {
+                if (current_line < lines.length) {
+                    const line_text = lines[current_line];
+                    if (typeof line_text !== 'undefined') {
+                        set_displayed_content(prev => prev + line_text + '\n');
+                    }
+                    current_line++;
+                }
+
+                else {
+                    clearInterval(interval);
+                    set_is_typing(false);
+                }
+            }, 50);
+            return() =>
+        }
+    })
 }
