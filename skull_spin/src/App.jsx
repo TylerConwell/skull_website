@@ -105,7 +105,30 @@ function App() {
                     set_is_typing(false);
                 }
             }, 50);
-            return() =>
+            return() => clearInterval(interval);
         }
-    })
+    }, [index, system_state]);
+
+    // state of button if its on then it clicks button and goes to the other page for booting
+    if (system_state === 'off') {
+        return (
+            <div className="power-screen">
+                <button className="power-btn" onClick={() => set_system_state('booting')}>
+                        [POWER ON]
+                </button>
+            </div>
+            );
+    }
+
+    // booting up screen does the cursor and will use a hash map to save the info
+    if (system_state === 'botting') {
+        return (
+            <div className="terminal-screen booting">
+                {boot_lines.map((line, i) => (
+                    <p key={i} className="boot-line">{line}</p>
+                ))}
+                <span className="cursor">█</span>
+            </div>
+        );
+    }
 }
