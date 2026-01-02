@@ -78,14 +78,14 @@ function App() {
                     clearInterval(interval);
                     setTimeout(() => set_system_state('ready'), 1000);
                 }
-            }, 400) // the speed of the boot_up_lines going down
+            }, 400); // the speed of the boot_up_lines going down
             return() => clearInterval(interval);
         }
     }, [system_state]);
 
     // ascii typing effect logic, scrolling down when 'ready'
     useEffect(() => {
-        if(system_state === 'ready') {
+        if (system_state === 'ready') {
             const lines = (all_skull_pics[index] || "").trimEnd().split('\n');
             let current_line = 0;
             set_displayed_content("");
@@ -117,11 +117,11 @@ function App() {
                         [POWER ON]
                 </button>
             </div>
-            );
+        );
     }
 
     // booting up screen does the cursor and will use a hash map to save the info
-    if (system_state === 'botting') {
+    if (system_state === 'booting') {
         return (
             <div className="terminal-screen booting">
                 {boot_lines.map((line, i) => (
