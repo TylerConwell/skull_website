@@ -131,4 +131,30 @@ function App() {
             </div>
         );
     }
+
+    // making the part where it all gonna print out and see whats broken
+    return(
+        <div className="app-countainer">
+            <div className="terminal-window">
+                <pre className="acsii-art">
+                    {displayed_content}
+                    <span className="cursor">█</span>
+                </pre>
+            </div>
+            <nav className="controls">
+                {all_skull_pics.map((_, i) => (
+                    <button 
+                    key={i}
+                    onClick={() => !is_typing && set_index(i)}
+                    className={index === i ? 'active' : ''}
+                    disabled={is_typing}
+                    >
+                    Spec {i + 1}
+                    </button>
+                ))}
+            </nav>
+        </div>
+    );
 }
+
+export default App;
