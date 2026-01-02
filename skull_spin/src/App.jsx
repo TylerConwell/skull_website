@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 // import all the ascii skulls as raw str's for vite
 import skull_prt1 from './assets/skull_prt1.txt?raw';
@@ -192,6 +192,15 @@ function App() {
                 ))}
             </nav>
             
+            <button
+                className="toggle-system-btn"
+                onClick={() => {
+                    const nextState = (system_state === 'ready') ? 'glitching' : 'booting';
+                    set_system_state(nextState);
+                }}
+            >
+                {system_state === 'ready' ? "ACCESS REDACTED FILES" : "RETURN TO SECURE BIOS"}
+            </button>
         </div>
     );
 }
