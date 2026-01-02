@@ -41,6 +41,19 @@ const boot_up_screen = [
     "Extended Memory:          1047552 KB"
 ];
 
+// hacked screen, for the hands, in red
+const hand_boot_up = [
+    "",
+    "A problem has been detected and windows has been shut down",
+    " to prevent damage to your computer.",
+    "A process of thread crucial to system operation has unexpectedly",
+    " exited or been terminated.",
+    "If this is the first time you've seen this stop error screen,",
+    "restart yo _  ur com _ pUterRrrr.",
+    "",
+    "STOP:0x000000F$ (0x00000003, 0x81F5AF14, 0x805C749A)"
+];
+
 function App() {
     // make state machine for the power screen, tell if system off or on
     const [system_state, set_system_state] = useState('off');
