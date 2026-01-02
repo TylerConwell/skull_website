@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import Footer from './components/Footer';
 
 // import all the ascii skulls as raw str's for vite
 import skull_prt1 from './assets/skull_prt1.txt?raw';
@@ -96,8 +97,32 @@ function App() {
         }
     }, [system_state]);
 
+
+    // glitch and hacking booting up logic in green and red
+    useEffect(() => {
+        if (system_state === 'glitching') {
+            let current_line = 0;
+            set_boot_lines([]); // clears the old bios screen
+            const interval = setInterval(() => {
+                if (current_line < hand_boot_up.length) {
+                    set_boot_lines(prev => [...prev, hand_boot_up[current_line]]);
+                    current_line++;
+                }
+
+                else {
+                    clearInterval(interval);
+                    setTimeout(() => set_system_state('hacked'), 1500); // put hacked in the system state
+                }
+            }, 150);
+            return () => clearInterval(interval);
+        }
+    }, [system_state]);
+
     // ascii typing effect logic, scrolling down when 'ready'
     useEffect(() => {
+        const current_collection = (system_state === 'ready') ? all_skull_pics : all_hand_pics;
+        const current_art_index = (system_state === 'ready') ? index : hand_index;
+
         if (system_state === 'ready') {
             const lines = (all_skull_pics[index] || "").trimEnd().split('\n');
             let current_line = 0;
@@ -166,6 +191,7 @@ function App() {
                     </button>
                 ))}
             </nav>
+            
         </div>
     );
 }

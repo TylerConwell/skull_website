@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: 100vh; /* This ensures the container takes at least the full viewport height */
+}
+
+main {
+  flex-grow: 1; /* This makes the main content area expand to fill available space */
+}
+
+footer {
+  /* Add specific styling for your footer here (background color, padding, etc.) */
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+}
