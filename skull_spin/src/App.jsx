@@ -82,7 +82,6 @@ function App() {
 
     // state for cursor on what is being texted on screen
     const [is_typing, set_is_typing] = useState(false);
-
     // state for the second hacker screen
     const [is_corrupting, set_is_corrupting] = useState(false);
 
