@@ -56,7 +56,7 @@ const hand_boot_up = [
     "Loading redacted data..."
 ];
 
-const hackerText = (text) => {
+const scrambleText = (text) => {
     const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/"
     return text.split('').map(char => {
         if (char === '/n' || char === ' ') return char;
