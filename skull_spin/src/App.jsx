@@ -56,6 +56,7 @@ const hand_boot_up = [
     "Loading redacted data..."
 ];
 
+// corruption funct for the scrambling of the words
 const scrambleText = (text) => {
     const chars = "!@#$%^&*()_+-=[]{}|;:,.<>?/"
     return text.split('').map(char => {
@@ -125,19 +126,27 @@ function App() {
             const current_idx = (system_state === 'ready') ? index : hand_index;
             const lines = (current_collection[current_idx] || "").trimEnd().split('\n')
             let current_line = 0;
-            // set_displayed_content("");
-            // set_is_typing(true);
+            set_displayed_content("");
+            set_is_typing(true);
 
             // set_boot_lines([]); // clears the old bios screen
+            // const interval = setInterval(() => {
+            //     if (current_line < hand_boot_up.length) {
+            //         set_boot_lines(prev => [...prev, hand_boot_up[current_line]]);
+            //         current_line++;
+            //     }
             const interval = setInterval(() => {
-                if (current_line < hand_boot_up.length) {
-                    set_boot_lines(prev => [...prev, hand_boot_up[current_line]]);
+                if (current_line < lines.length) {
+                    let line_text = lines[current_line];
+                    if (typeof line_text !== 'undefined') {
+                        set_displayed_content(prev => prev + line_text + '\n');
+                    }
                     current_line++;
                 }
-
                 else {
                     clearInterval(interval);
-                    setTimeout(() => set_system_state('hacked'), 1500); // put hacked in the system state
+                    // setTimeout(() => set_system_state('hacked'), 1500); // put hacked in the system state
+                    set_is_typing(false);
                 }
             }, 150);
             return () => clearInterval(interval);
