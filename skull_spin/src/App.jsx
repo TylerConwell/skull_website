@@ -137,7 +137,7 @@ function App() {
             //     }
             const interval = setInterval(() => {
                 if (current_line < lines.length) {
-                    let line_text = lines[current_line];
+                    const line_text = lines[current_line];
                     if (typeof line_text !== 'undefined') {
                         set_displayed_content(prev => prev + line_text + '\n');
                     }
@@ -148,41 +148,22 @@ function App() {
                     // setTimeout(() => set_system_state('hacked'), 1500); // put hacked in the system state
                     set_is_typing(false);
                 }
-            }, 150);
+            }, 400);
             return () => clearInterval(interval);
         }
-    }, [system_state]);
+    }, [index, hand_index, system_state]);
 
-    // ascii typing effect logic, scrolling down when 'ready'
-    useEffect(() => {
-        const current_collection = (system_state === 'ready') ? all_skull_pics : all_hand_pics;
-        const current_art_index = (system_state === 'ready') ? index : hand_index;
+    // toggle the corruption effect on the hacked screen
+    const handleToggle = () => {
+        if (is_typing || is_corrupting) return;
+        set_is_corrupting(true);
+        setTimeout(() => {
+            set_is_corrupting(false);
+            set_system_state(system_state === 'ready' ? 'glitching' : 'booting');
+        }, 700);
+    };
 
-        if (system_state === 'ready') {
-            const lines = (all_skull_pics[index] || "").trimEnd().split('\n');
-            let current_line = 0;
-            set_displayed_content("");
-            set_is_typing(true);
-
-            const interval = setInterval(() => {
-                if (current_line < lines.length) {
-                    const line_text = lines[current_line];
-                    if (typeof line_text !== 'undefined') {
-                        set_displayed_content(prev => prev + line_text + '\n');
-                    }
-                    current_line++;
-                }
-
-                else {
-                    clearInterval(interval);
-                    set_is_typing(false);
-                }
-            }, 50);
-            return() => clearInterval(interval);
-        }
-    }, [index, system_state]);
-
-    // state of button if its on then it clicks button and goes to the other page for booting
+    // render logic
     if (system_state === 'off') {
         return (
             <div className="power-screen">
@@ -193,10 +174,9 @@ function App() {
         );
     }
 
-    // booting up screen does the cursor and will use a hash map to save the info
-    if (system_state === 'booting') {
+    if (system_state === 'booting' || system_state === 'glitching') {
         return (
-            <div className="terminal-screen booting">
+            <div className={`terminal-screen ${system_state}`}>
                 {boot_lines.map((line, i) => (
                     <p key={i} className="boot-line">{line}</p>
                 ))}
@@ -205,17 +185,68 @@ function App() {
         );
     }
 
+    // // ascii typing effect logic, scrolling down when 'ready'
+    // useEffect(() => {
+    //     const current_collection = (system_state === 'ready') ? all_skull_pics : all_hand_pics;
+    //     const current_art_index = (system_state === 'ready') ? index : hand_index;
+
+    //     if (system_state === 'ready') {
+    //         const lines = (all_skull_pics[index] || "").trimEnd().split('\n');
+    //         let current_line = 0;
+    //         set_displayed_content("");
+    //         set_is_typing(true);
+
+    //         const interval = setInterval(() => {
+    //             if (current_line < lines.length) {
+    //                 const line_text = lines[current_line];
+    //                 if (typeof line_text !== 'undefined') {
+    //                     set_displayed_content(prev => prev + line_text + '\n');
+    //                 }
+    //                 current_line++;
+    //             }
+
+    //             else {
+    //                 clearInterval(interval);
+    //                 set_is_typing(false);
+    //             }
+    //         }, 50);
+    //         return() => clearInterval(interval);
+    //     }
+    // }, [index, system_state]);
+
+    // // state of button if its on then it clicks button and goes to the other page for booting
+    // if (system_state === 'off') {
+    //     return (
+    //         <div className="power-screen">
+    //             <button className="power-btn" onClick={() => set_system_state('booting')}>
+    //                     [POWER ON]
+    //             </button>
+    //         </div>
+    //     );
+    // }
+
+    // // booting up screen does the cursor and will use a hash map to save the info
+    // if (system_state === 'booting') {
+    //     return (
+    //         <div className="terminal-screen booting">
+    //             {boot_lines.map((line, i) => (
+    //                 <p key={i} className="boot-line">{line}</p>
+    //             ))}
+    //             <span className="cursor">█</span>
+    //         </div>
+    //     );
+    // }
+
     // making the part where it all gonna print out and see whats broken
-    return(
-        <div className={`app-container ${system_state === 'hacked' ? 'red-alert' : ''}`}>
+   return (
+        <div className={`app-container ${system_state === 'hacked' ? 'red-alert' : ''} ${is_corrupting ? 'glitch-shake' : ''}`}>
             <div className="terminal-window">
-                <pre className="acsii-art">
-                    {displayed_content}
+                <pre className="ascii-art">
+                    {is_corrupting ? scrambleText(displayed_content) : displayed_content}
                     <span className="cursor">█</span>
                 </pre>
             </div>
 
-            {/* the bottom button */}
             <div className="interface-footer">
                 <nav className="controls">
                     {(system_state === 'ready' ? all_skull_pics : all_hand_pics).map((_, i) => (
@@ -223,21 +254,15 @@ function App() {
                             key={i}
                             onClick={() => !is_typing && (system_state === 'ready' ? set_index(i) : set_hand_index(i))}
                             className={(system_state === 'ready' ? index : hand_index) === i ? 'active' : ''}
-                            disabled={is_typing}
+                            disabled={is_typing || is_corrupting}
                         >
                             {system_state === 'ready' ? `Spec ${i + 1}` : `Data ${i + 1}`}
                         </button>
                     ))}
                 </nav>
-            
-                <button
-                    className="toggle-system-btn"
-                    onClick={() => {
-                        const nextState = (system_state === 'ready') ? 'glitching' : 'booting';
-                        set_system_state(nextState);
-                    }}
-                >
-                    {system_state === 'ready' ? "ACCESS REDACTED FILES" : "RETURN TO SECURE BIOS"}
+
+                <button className="toggle-system-btn" onClick={handleToggle} disabled={is_typing || is_corrupting}>
+                    {system_state === 'ready' ? "ACCESS CLASSIFIED //" : "RESTORE SYSTEM //"}
                 </button>
             </div>
         </div>
