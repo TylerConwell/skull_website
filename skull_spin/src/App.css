@@ -72,4 +72,55 @@ body, html {
     margin-bottom: 20px;
     min-width: 600px;
     min-height: 400px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.ascii-art {
+    white-space: pre;
+    font-size: 17px;
+    line-height: 1.2;
+    text-align: inherit;
+}
+
+.interface-footer {
+    display: flex;
+    gap:20px;
+    align-items: center;
+}
+
+.controls button, .toggle-system-btn {
+    background: transparent;
+    border: 1px solid currentColor;
+    color: inherit;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-right: 15px;
+}
+
+.toggle-system-btn {
+    border-style: dashed;
+    color: inherit;
+    border-color: inherit;
+    background-color: inherit;
+}
+
+.cursor {animation: blink 1s step-end infinite;}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.glitch-shake {
+    animation: shake 0.1s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(2px, 2px); }
+    25% { transform: translate(-2px, -2px); }
+    50% { transform: translate(-2px, 2px); }
+    75% { transform: translate(2px, -2px); }
 }
